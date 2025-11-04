@@ -8,6 +8,7 @@
                     v-for="item in menus"
                     :key="item.name"
                     class="relative group hover:bg-slate-600 hover:text-slate-300 cursor-pointer rounded-md ease-in transition-all"
+                    @click="item.onClick"
                 >
                     <span
                         class="absolute top-0 left-[150%] bg-slate-800 rounded-md p-2 font-bold -translate-x-full opacity-0 group-hover:opacity-100 group-hover:translate-x-0 ease-in transition-all"
@@ -40,7 +41,12 @@
                     <MenuItems
                         class="absolute left-full bottom-0 ml-5 -mb-2 w-56 bg-slate-800 rounded-md overflow-hidden focus:outline-none"
                     >
-                        <MenuItem v-for="item in userMenus" v-slot="{ active }">
+                        <MenuItem
+                            v-for="item in userMenus"
+                            :key="item.name"
+                            v-slot="{ active }"
+                            @click="item.onClick"
+                        >
                             <button
                                 :class="[
                                     active
@@ -79,16 +85,24 @@ import {
 } from "@heroicons/vue/24/outline";
 
 const menus = [
-    { name: "Accueil", icon: HomeIcon },
-    { name: "Apps", icon: RectangleStackIcon },
-    { name: "Nodes", icon: ServerIcon },
-    { name: "Facturation", icon: CurrencyDollarIcon },
-    { name: "Paramètres", icon: Cog6ToothIcon },
-    { name: "Aide", icon: QuestionMarkCircleIcon },
+    { name: "Accueil", icon: HomeIcon, onClick: nothing },
+    { name: "Apps", icon: RectangleStackIcon, onClick: nothing },
+    { name: "Nodes", icon: ServerIcon, onClick: nothing },
+    { name: "Facturation", icon: CurrencyDollarIcon, onClick: nothing },
+    { name: "Paramètres", icon: Cog6ToothIcon, onClick: nothing },
+    { name: "Aide", icon: QuestionMarkCircleIcon, onClick: nothing },
 ];
 
 const userMenus = [
-    { name: "Profil", icon: UserCircleIcon },
-    { name: "Déconnexion", icon: ArrowLeftStartOnRectangleIcon },
+    { name: "Profil", icon: UserCircleIcon, onClick: nothing },
+    {
+        name: "Déconnexion",
+        icon: ArrowLeftStartOnRectangleIcon,
+        onClick: nothing,
+    },
 ];
+
+function nothing() {
+    alert("TODO");
+}
 </script>
