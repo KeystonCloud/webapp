@@ -41,7 +41,7 @@
                         Connexion
                     </router-link>
                     <router-link
-                        :to="{ name: 'dashboard' }"
+                        :to="{ name: 'signup' }"
                         class="rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                     >
                         S'inscrire
@@ -102,7 +102,7 @@
                                 Connexion
                             </router-link>
                             <router-link
-                                :to="{ name: 'dashboard' }"
+                                :to="{ name: 'signup' }"
                                 @click="mobileMenuOpen = false"
                                 class="-mx-3 mt-2 block rounded-lg bg-indigo-500 px-3 py-2.5 text-base font-semibold leading-7 text-white hover:bg-indigo-400"
                             >
