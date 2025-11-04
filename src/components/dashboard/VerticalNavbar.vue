@@ -70,6 +70,7 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
 import {
     HomeIcon,
     RectangleStackIcon,
@@ -84,17 +85,47 @@ import {
     ArrowLeftStartOnRectangleIcon,
 } from "@heroicons/vue/24/outline";
 
+const router = useRouter();
+
 const menus = [
-    { name: "Tableau de bord", icon: HomeIcon, onClick: nothing },
-    { name: "Apps", icon: RectangleStackIcon, onClick: nothing },
-    { name: "Nodes", icon: ServerIcon, onClick: nothing },
-    { name: "Facturation", icon: CurrencyDollarIcon, onClick: nothing },
-    { name: "Paramètres", icon: Cog6ToothIcon, onClick: nothing },
-    { name: "Aide", icon: QuestionMarkCircleIcon, onClick: nothing },
+    {
+        name: "Tableau de bord",
+        icon: HomeIcon,
+        onClick: () => routeTo("dashboard"),
+    },
+    {
+        name: "Apps",
+        icon: RectangleStackIcon,
+        onClick: () => routeTo("dashboard.apps"),
+    },
+    {
+        name: "Nodes",
+        icon: ServerIcon,
+        onClick: () => routeTo("dashboard.nodes"),
+    },
+    {
+        name: "Facturation",
+        icon: CurrencyDollarIcon,
+        onClick: () => routeTo("dashboard.billing"),
+    },
+    {
+        name: "Paramètres",
+        icon: Cog6ToothIcon,
+        onClick: () => routeTo("dashboard.settings"),
+    },
+    {
+        name: "Aide",
+        icon: QuestionMarkCircleIcon,
+        onClick: () => routeTo("dashboard.help"),
+    },
 ];
 
 const userMenus = [
-    { name: "Profil", icon: UserCircleIcon, onClick: nothing },
+    {
+        name: "Profil",
+        icon: UserCircleIcon,
+        onClick: () => routeTo("dashboard.profil"),
+    },
     {
         name: "Déconnexion",
         icon: ArrowLeftStartOnRectangleIcon,
@@ -104,5 +135,9 @@ const userMenus = [
 
 function nothing() {
     alert("TODO");
+}
+
+function routeTo(name) {
+    router.push({ name });
 }
 </script>

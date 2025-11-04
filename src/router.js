@@ -10,6 +10,12 @@ import LoginView from "./views/LoginView.vue";
 import SignupView from "./views/SignupView.vue";
 
 import DashboardHomeView from "./views/dashboard/HomeView.vue";
+import DashboardAppsView from "./views/dashboard/AppsView.vue";
+import DashboardNodesView from "./views/dashboard/NodesView.vue";
+import DashboardBillingView from "./views/dashboard/BillingView.vue";
+import DashboardSettingsView from "./views/dashboard/SettingsView.vue";
+import DashboardHelpView from "./views/dashboard/HelpView.vue";
+import DashboardProfilView from "./views/dashboard/ProfilView.vue";
 
 const routes = [
   {
@@ -26,7 +32,43 @@ const routes = [
   {
     path: "/dashboard",
     component: DashboardLayout,
-    children: [{ name: "dashboard", path: "", component: DashboardHomeView }],
+    children: [
+      {
+        name: "dashboard",
+        path: "",
+        component: DashboardHomeView,
+      },
+      {
+        name: "dashboard.apps",
+        path: "/dashboard/apps",
+        component: DashboardAppsView,
+      },
+      {
+        name: "dashboard.nodes",
+        path: "/dashboard/nodes",
+        component: DashboardNodesView,
+      },
+      {
+        name: "dashboard.billing",
+        path: "/dashboard/billing",
+        component: DashboardBillingView,
+      },
+      {
+        name: "dashboard.settings",
+        path: "/dashboard/settings",
+        component: DashboardSettingsView,
+      },
+      {
+        name: "dashboard.help",
+        path: "/dashboard/help",
+        component: DashboardHelpView,
+      },
+      {
+        name: "dashboard.profil",
+        path: "/dashboard/profil",
+        component: DashboardProfilView,
+      },
+    ],
   },
 ];
 

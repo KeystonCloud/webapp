@@ -183,21 +183,24 @@
 import { CheckIcon } from "@heroicons/vue/20/solid";
 
 const hobbyFeatures = [
-    "5 Déploiements",
+    "1 Application",
+    "Déploiements limités",
     "Réseau Keyston P2P",
     "Bande passante limitée",
+    "Stockage limité",
     "Support communautaire",
 ];
 const proFeatures = [
+    "Applications illimitées",
     "Déploiements illimités",
     "Bande passante illimitée",
+    "Stockage illimité",
     "Membres d'équipe",
     "Analytiques",
     "Support par email",
 ];
 const enterpriseFeatures = [
     "Tout du plan Pro",
-    "Bande passante illimitée",
     "SSO & Sécurité avancée",
     "Réseau privé dédié (optionnel)",
     "Support prioritaire 24/7",
