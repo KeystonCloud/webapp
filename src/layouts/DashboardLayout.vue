@@ -1,5 +1,5 @@
 <template>
-    <div class="flex h-dvh">
+    <div class="flex h-screen">
         <VerticalNavbar />
         <div class="flex-1 overflow-auto">
             <RouterView />

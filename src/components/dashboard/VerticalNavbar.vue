@@ -1,45 +1,65 @@
 <template>
     <div class="bg-slate-800 m-2 rounded-md">
-        <nav
-            class="relative z-0 flex flex-col items-center text-gray-300 p-2 space-y-2"
+        <div
+            class="flex flex-col items-center h-full justify-between text-slate-400 p-2"
         >
-            <div class="nav-item">
-                <HomeIcon
-                    class="z-2 size-10 p-2 hover:text-white cursor-pointer"
-                    title="Accueil"
-                />
-            </div>
-            <div class="nav-item">
-                <RectangleStackIcon
-                    class="z-2 size-10 p-2 hover:text-white cursor-pointer"
-                    title="Projets"
-                />
-            </div>
-            <div class="nav-item">
-                <ServerIcon
-                    class="z-2 size-10 p-2 hover:text-white cursor-pointer"
-                    title="Nœuds"
-                />
-            </div>
-            <div class="nav-item">
-                <CurrencyDollarIcon
-                    class="z-2 size-10 p-2 hover:text-white cursor-pointer"
-                    title="Facturation"
-                />
-            </div>
-            <div class="nav-item">
-                <Cog6ToothIcon
-                    class="z-2 size-10 p-2 hover:text-white cursor-pointer"
-                    title="Paramètres"
-                />
-            </div>
-            <div class="nav-item">
-                <QuestionMarkCircleIcon
-                    class="z-2 size-10 p-2 hover:text-white cursor-pointer"
-                    title="Aide"
-                />
-            </div>
-        </nav>
+            <nav class="flex flex-col space-y-2">
+                <div
+                    v-for="item in menus"
+                    :key="item.name"
+                    class="relative group hover:bg-slate-600 hover:text-slate-300 cursor-pointer rounded-md ease-in transition-all"
+                >
+                    <span
+                        class="absolute top-0 left-[150%] bg-slate-800 rounded-md p-2 font-bold -translate-x-full opacity-0 group-hover:opacity-100 group-hover:translate-x-0 ease-in transition-all"
+                        >{{ item.name }}</span
+                    >
+                    <component
+                        :is="item.icon"
+                        class="size-10 p-2"
+                        :title="item.name"
+                    />
+                </div>
+            </nav>
+            <Menu as="div" class="relative inline-block text-left">
+                <div>
+                    <MenuButton class="cursor-pointer">
+                        <img
+                            class="size-8 rounded-full"
+                            src="https://i.pravatar.cc/100"
+                        />
+                    </MenuButton>
+                </div>
+                <transition
+                    enter-active-class="transition duration-100 ease-out"
+                    enter-from-class="transform scale-95 opacity-0"
+                    enter-to-class="transform scale-100 opacity-100"
+                    leave-active-class="transition duration-75 ease-in"
+                    leave-from-class="transform scale-100 opacity-100"
+                    leave-to-class="transform scale-95 opacity-0"
+                >
+                    <MenuItems
+                        class="absolute left-full bottom-0 ml-5 -mb-2 w-56 bg-slate-800 rounded-md overflow-hidden focus:outline-none"
+                    >
+                        <MenuItem v-for="item in userMenus" v-slot="{ active }">
+                            <button
+                                :class="[
+                                    active
+                                        ? 'bg-slate-600 text-slate-300'
+                                        : 'text-slate-400',
+                                    'flex w-full items-center px-2 py-2 text-sm cursor-pointer',
+                                ]"
+                            >
+                                <component
+                                    :is="item.icon"
+                                    class="mr-2 size-5"
+                                />
+                                {{ item.name }}
+                            </button>
+                        </MenuItem>
+                    </MenuItems>
+                </transition>
+            </Menu>
+        </div>
     </div>
 </template>
 
@@ -52,52 +72,23 @@ import {
     Cog6ToothIcon,
     QuestionMarkCircleIcon,
 } from "@heroicons/vue/24/outline";
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
+import {
+    UserCircleIcon,
+    ArrowLeftStartOnRectangleIcon,
+} from "@heroicons/vue/24/outline";
+
+const menus = [
+    { name: "Accueil", icon: HomeIcon },
+    { name: "Apps", icon: RectangleStackIcon },
+    { name: "Nodes", icon: ServerIcon },
+    { name: "Facturation", icon: CurrencyDollarIcon },
+    { name: "Paramètres", icon: Cog6ToothIcon },
+    { name: "Aide", icon: QuestionMarkCircleIcon },
+];
+
+const userMenus = [
+    { name: "Profil", icon: UserCircleIcon },
+    { name: "Déconnexion", icon: ArrowLeftStartOnRectangleIcon },
+];
 </script>
-
-<style scoped>
-.nav-item {
-    z-index: 10;
-}
-
-.nav-item:last-child::before {
-    content: "";
-    position: absolute;
-    opacity: 0;
-    top: calc(var(--spacing) * 2);
-    left: calc(var(--spacing) * 2);
-    width: calc(var(--spacing) * 10);
-    height: calc(var(--spacing) * 10);
-    background-color: rgba(255, 255, 255, 0.2);
-    border-radius: 0.375rem;
-    z-index: 1;
-    transition: all 0.3s ease;
-}
-
-.nav-item:hover ~ .nav-item:last-child::before {
-    opacity: 1;
-}
-
-.nav-item:nth-child(1):hover ~ .nav-item:last-child::before {
-    top: calc(var(--spacing) * 2);
-}
-
-.nav-item:nth-child(2):hover ~ .nav-item:last-child::before {
-    top: calc(var(--spacing) * 14);
-}
-
-.nav-item:nth-child(3):hover ~ .nav-item:last-child::before {
-    top: calc(var(--spacing) * 26);
-}
-
-.nav-item:nth-child(4):hover ~ .nav-item:last-child::before {
-    top: calc(var(--spacing) * 38);
-}
-
-.nav-item:nth-child(5):hover ~ .nav-item:last-child::before {
-    top: calc(var(--spacing) * 50);
-}
-
-.nav-item:nth-child(6):hover ~ .nav-item:last-child::before {
-    top: calc(var(--spacing) * 62);
-}
-</style>
