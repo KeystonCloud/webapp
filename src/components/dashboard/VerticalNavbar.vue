@@ -11,7 +11,7 @@
                     @click="item.onClick"
                 >
                     <span
-                        class="absolute top-0 left-[150%] bg-slate-800 rounded-md p-2 font-bold -translate-x-full opacity-0 group-hover:opacity-100 group-hover:translate-x-0 ease-in transition-all"
+                        class="absolute top-1 left-[150%] bg-slate-800 rounded-md p-2 font-bold text-xs text-nowrap -translate-x-full opacity-0 group-hover:bg-slate-600 group-hover:text-slate-300 group-hover:opacity-100 group-hover:translate-x-0 ease-in transition-all"
                         >{{ item.name }}</span
                     >
                     <component
@@ -52,7 +52,7 @@
                                     active
                                         ? 'bg-slate-600 text-slate-300'
                                         : 'text-slate-400',
-                                    'flex w-full items-center px-2 py-2 text-sm cursor-pointer',
+                                    'flex w-full items-center px-2 py-2 text-sm font-bold cursor-pointer transition-all ease-in',
                                 ]"
                             >
                                 <component
@@ -85,7 +85,7 @@ import {
 } from "@heroicons/vue/24/outline";
 
 const menus = [
-    { name: "Accueil", icon: HomeIcon, onClick: nothing },
+    { name: "Tableau de bord", icon: HomeIcon, onClick: nothing },
     { name: "Apps", icon: RectangleStackIcon, onClick: nothing },
     { name: "Nodes", icon: ServerIcon, onClick: nothing },
     { name: "Facturation", icon: CurrencyDollarIcon, onClick: nothing },

@@ -1,0 +1,29 @@
+<svg
+    width="40"
+    height="40"
+    viewBox="0 0 40 40"
+    fill="#4f39f6"
+    xmlns="http://www.w3.org/2000/svg"
+    aria-hidden="true"
+  >
+    <path
+        fill="parentColor"
+        opacity="0.75"
+        d="M20 5L8 12.5V19.6429L20 24.5V5Z"
+    />
+    <path
+        fill="parentColor"
+        opacity="0.5"
+        d="M20 5L32 12.5V19.6429L20 24.5V5Z"
+    />
+    <path
+        fill="parentColor"
+        opacity="1"
+        d="M8 20.3571V27.5L20 35V25.2143L8 20.3571Z"
+    />
+    <path
+        fill="parentColor"
+        opacity="0.75"
+        d="M32 20.3571V27.5L20 35V25.2143L32 20.3571Z"
+    />
+  </svg>
