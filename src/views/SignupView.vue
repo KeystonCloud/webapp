@@ -56,7 +56,7 @@
                     <div>
                         <button
                             type="submit"
-                            class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                            class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm cursor-pointer hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                         >
                             Créer le compte
                         </button>
@@ -79,11 +79,11 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/userStore";
 import GithubIcon from "@/assets/icons/GithubIcon.vue";
 import KCInput from "@/components/form/KCInput.vue";
 
-const router = useRouter();
+const userStore = useUserStore();
 
 const name = ref("");
 const email = ref("");
@@ -91,18 +91,10 @@ const password = ref("");
 
 const handleSubmit = async () => {
     try {
-        console.log(
-            "Tentative d'inscription:",
-            name.value,
-            email.value,
-            password.value,
-        );
-        alert("Inscription réussie ! (simulation)");
-
-        router.push({ name: "dashboard" });
+        await userStore.register(name.value, email.value, password.value);
     } catch (error) {
-        console.error("Erreur d'authentification:", error);
-        alert("Échec de l'authentification");
+        console.error("Registration error:", error);
+        alert("Registration error");
     }
 };
 </script>

@@ -71,6 +71,7 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/userStore";
 import {
     HomeIcon,
     RectangleStackIcon,
@@ -86,6 +87,7 @@ import {
 } from "@heroicons/vue/24/outline";
 
 const router = useRouter();
+const userStore = useUserStore();
 
 const menus = [
     {
@@ -129,12 +131,12 @@ const userMenus = [
     {
         name: "Déconnexion",
         icon: ArrowLeftStartOnRectangleIcon,
-        onClick: nothing,
+        onClick: () => logout(),
     },
 ];
 
-function nothing() {
-    alert("TODO");
+function logout() {
+    userStore.logout();
 }
 
 function routeTo(name) {

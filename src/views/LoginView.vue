@@ -36,7 +36,11 @@
 
                 <form class="space-y-6" @submit.prevent="handleSubmit">
                     <div>
-                        <KCInput label="Adresse e-mail" type="email" />
+                        <KCInput
+                            v-model="email"
+                            label="Adresse e-mail"
+                            type="email"
+                        />
                     </div>
 
                     <div>
@@ -50,7 +54,7 @@
                     <div>
                         <button
                             type="submit"
-                            class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                            class="flex w-full justify-center rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm cursor-pointer hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
                         >
                             Se connecter
                         </button>
@@ -73,24 +77,21 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useUserStore } from "@/stores/userStore";
 import GithubIcon from "@/assets/icons/GithubIcon.vue";
 import KCInput from "@/components/form/KCInput.vue";
 
-const router = useRouter();
+const userStore = useUserStore();
 
 const email = ref("");
 const password = ref("");
 
 const handleSubmit = async () => {
     try {
-        console.log("Tentative de connexion:", email.value, password.value);
-        alert("Connexion réussie ! (simulation)");
-
-        router.push({ name: "dashboard" });
+        await userStore.login(email.value, password.value);
     } catch (error) {
-        console.error("Erreur d'authentification:", error);
-        alert("Échec de l'authentification");
+        console.error("Authentication error:", error);
+        alert("Authentication error");
     }
 };
 </script>

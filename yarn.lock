@@ -782,6 +782,11 @@ magic-string@^0.30.19:
   dependencies:
     "@jridgewell/sourcemap-codec" "^1.5.5"
 
+mande@^2.0.9:
+  version "2.0.9"
+  resolved "https://registry.yarnpkg.com/mande/-/mande-2.0.9.tgz#523de1b9e244aff186e435c8708fd841686ba240"
+  integrity sha512-F5kH/uSnhQBP7D5C+Y1rGt2S4lZuPfgIs5Ui49jrkjxE3sSAHwCE6r3hNo5gqihR5pZ1rGnjO7Oqnu2Lr1uG7g==
+
 mitt@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/mitt/-/mitt-3.0.1.tgz#ea36cf0cc30403601ae074c8f77b7092cdab36d1"
