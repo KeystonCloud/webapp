@@ -59,7 +59,7 @@
                 </div>
             </div>
 
-            <div class="mt-10">
+            <div v-if="nodes && nodes.length > 0" class="mt-10">
                 <h2 class="text-base font-semibold leading-7 text-white">
                     Nodes
                 </h2>
@@ -80,6 +80,9 @@
 </template>
 
 <script setup>
+import { ref, watch, inject } from "vue";
+import { useNodeStore } from "@/stores/nodeStore";
+import { useAppStore } from "@/stores/appStore";
 import {
     ArrowUpRightIcon,
     RectangleStackIcon,
@@ -94,6 +97,10 @@ import StatCard from "@/components/dashboard/StatCard.vue";
 import AppCard from "@/components/dashboard/AppCard.vue";
 import NodeCard from "@/components/dashboard/NodeCard.vue";
 
+const nodeStore = useNodeStore();
+const appStore = useAppStore();
+const moment = inject("moment");
+
 const stats = [
     { name: "Apps Total", stat: "6", icon: RectangleStackIcon },
     { name: "Bande Passante (Mois)", stat: "2.5 TB", icon: ArrowUpRightIcon },
@@ -107,50 +114,45 @@ const stats = [
     { name: "Total Gain", stat: "$ 6,934", icon: CurrencyDollarIcon },
 ];
 
-const apps = [
-    {
-        name: "KeystonCloud Status",
-        domain: "status.keyston.app",
-        status: "En_cours",
-        lastDeploy: "1 min",
-        lastDeployTime: "2025-11-04T16:10:00Z",
-    },
-    {
-        name: "Portfolio-v3",
-        domain: "portfolio.keyston.app",
-        status: "Déployé",
-        lastDeploy: "2 h",
-        lastDeployTime: "2025-11-03T16:10:00Z",
-    },
-    {
-        name: "Client-Projet-Alpha",
-        domain: "alpha.client.com",
-        status: "Erreur",
-        lastDeploy: "1 j",
-        lastDeployTime: "2025-11-02T14:30:00Z",
-    },
-];
+const nodes = ref([]);
+const apps = ref([]);
 
-const nodes = [
-    {
-        uuid: "926b5ba8-6c6c-42ae-ad1c-af90a85b400c",
-        lastDeploy: "3 h",
-        lastDeployTime: "2025-11-04T16:10:00Z",
+watch(
+    () => appStore.apps,
+    (newApps) => {
+        apps.value = [];
+
+        if (newApps) {
+            newApps.forEach((app) => {
+                apps.value.push({
+                    name: app.name,
+                    domain: "http://localhost:8000/app/" + app.name,
+                    status: "Deployed",
+                    lastDeploy: moment(app.created_at).fromNow(),
+                    lastDeployTime: app.created_at,
+                });
+            });
+        }
     },
-    {
-        uuid: "6e6a3efd-0f1c-4005-bd42-cba1b7963718",
-        lastDeploy: "1 j",
-        lastDeployTime: "2025-11-03T16:10:00Z",
+    { immediate: true },
+);
+
+watch(
+    () => nodeStore.nodes,
+    (newNodes) => {
+        nodes.value = [];
+
+        if (newNodes) {
+            newNodes.forEach((node) => {
+                nodes.value.push({
+                    uuid: node.id,
+                    name: node.name,
+                    lastDeploy: moment(node.created_at).fromNow(),
+                    lastDeployTime: node.created_at,
+                });
+            });
+        }
     },
-    {
-        uuid: "f7cf8937-18dc-4e62-a2c9-df1653ad17ec",
-        lastDeploy: "2 j",
-        lastDeployTime: "2025-11-02T16:10:00Z",
-    },
-    {
-        uuid: "ca88c12b-6c8e-4c5e-886b-243fdba590d6",
-        lastDeploy: "2 j",
-        lastDeployTime: "2025-11-02T16:00:00Z",
-    },
-];
+    { immediate: true },
+);
 </script>

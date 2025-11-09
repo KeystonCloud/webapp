@@ -3,14 +3,14 @@
         <div class="min-w-0">
             <div class="flex items-start gap-x-3">
                 <p class="text-sm font-semibold leading-6 text-white">
-                    {{ node.uuid }}
+                    {{ node.name }}
                 </p>
             </div>
             <div
                 class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-400"
             >
                 <p class="whitespace-nowrap">
-                    Déployé il y a
+                    Déployé
                     <time :datetime="node.lastDeployTime">{{
                         node.lastDeploy
                     }}</time>

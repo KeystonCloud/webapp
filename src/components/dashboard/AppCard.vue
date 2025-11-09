@@ -18,7 +18,7 @@
                 class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-400"
             >
                 <p class="whitespace-nowrap">
-                    Déployé il y a
+                    Déployé
                     <time :datetime="app.lastDeployTime">{{
                         app.lastDeploy
                     }}</time>
@@ -55,8 +55,8 @@ defineProps({
 });
 
 const statuses = {
-    Déployé: "text-green-400 bg-green-400/10 ring-green-400/20",
-    Erreur: "text-red-400 bg-red-400/10 ring-red-400/20",
-    En_cours: "text-yellow-400 bg-yellow-400/10 ring-yellow-400/20",
+    Deployed: "text-green-400 bg-green-400/10 ring-green-400/20",
+    Error: "text-red-400 bg-red-400/10 ring-red-400/20",
+    InProgress: "text-yellow-400 bg-yellow-400/10 ring-yellow-400/20",
 };
 </script>
