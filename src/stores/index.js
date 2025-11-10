@@ -1,5 +1,9 @@
+import { markRaw } from "vue";
 import { createPinia } from "pinia";
+import { router } from "@/router";
 
-const pinia = createPinia();
+export const pinia = createPinia();
 
-export default pinia;
+pinia.use(({ store }) => {
+  store.$router = markRaw(router);
+});

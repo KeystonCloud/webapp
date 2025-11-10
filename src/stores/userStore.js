@@ -12,6 +12,15 @@ export const useUserStore = defineStore("user", {
       teams: null,
     };
   },
+  getters: {
+    async isLoggedIn(state) {
+      if (!state.token) {
+        this.load();
+      }
+
+      return !!state.token;
+    },
+  },
   actions: {
     async load() {
       try {
@@ -74,11 +83,14 @@ export const useUserStore = defineStore("user", {
       }
     },
     async logout() {
+      localStorage.removeItem("token");
       this.token = null;
       this.user = null;
+      this.teams = null;
       delete userApi.options.headers.Authorization;
+      delete teamApi.options.headers.Authorization;
       delete defaults.headers.Authorization;
-      this.$router.push({ name: "home" });
+      this.$router.push({ name: "login" });
     },
   },
 });
