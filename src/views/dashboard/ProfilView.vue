@@ -151,10 +151,13 @@
 
 <script setup>
 import { ref } from "vue";
+import { useUserStore } from "@/stores/userStore";
 import KCInput from "@/components/form/KCInput.vue";
 
-const name = ref("Gregory House");
-const email = ref("ghouse@ppth.com");
+const userStore = useUserStore();
+
+const name = ref(userStore.user.name);
+const email = ref(userStore.user.email);
 const password = ref("");
 const newPassword = ref("");
 </script>

@@ -66,7 +66,9 @@ export const useUserStore = defineStore("user", {
         this.teams = (await teamApi.get("/mine")).data;
 
         // Redirect to dashboard
-        this.$router.push({ name: "dashboard" });
+        if (this.$router) {
+          this.$router.push({ name: "dashboard" });
+        }
       } catch (error) {
         console.error("Login failed:", error);
       }

@@ -1,23 +1,21 @@
-import { createWebHistory, createRouter } from "vue-router";
+import DefaultLayout from "@/layouts/DefaultLayout.vue";
+import DashboardLayout from "@/layouts/DashboardLayout.vue";
 
-import DefaultLayout from "./layouts/DefaultLayout.vue";
-import DashboardLayout from "./layouts/DashboardLayout.vue";
+import HomeView from "@/views/HomeView.vue";
+import PricingView from "@/views/PricingView.vue";
+import DocumentationView from "@/views/DocumentationView.vue";
+import LoginView from "@/views/LoginView.vue";
+import SignupView from "@/views/SignupView.vue";
 
-import HomeView from "./views/HomeView.vue";
-import PricingView from "./views/PricingView.vue";
-import DocumentationView from "./views/DocumentationView.vue";
-import LoginView from "./views/LoginView.vue";
-import SignupView from "./views/SignupView.vue";
+import DashboardHomeView from "@/views/dashboard/HomeView.vue";
+import DashboardAppsView from "@/views/dashboard/AppsView.vue";
+import DashboardNodesView from "@/views/dashboard/NodesView.vue";
+import DashboardBillingView from "@/views/dashboard/BillingView.vue";
+import DashboardSettingsView from "@/views/dashboard/SettingsView.vue";
+import DashboardHelpView from "@/views/dashboard/HelpView.vue";
+import DashboardProfilView from "@/views/dashboard/ProfilView.vue";
 
-import DashboardHomeView from "./views/dashboard/HomeView.vue";
-import DashboardAppsView from "./views/dashboard/AppsView.vue";
-import DashboardNodesView from "./views/dashboard/NodesView.vue";
-import DashboardBillingView from "./views/dashboard/BillingView.vue";
-import DashboardSettingsView from "./views/dashboard/SettingsView.vue";
-import DashboardHelpView from "./views/dashboard/HelpView.vue";
-import DashboardProfilView from "./views/dashboard/ProfilView.vue";
-
-const routes = [
+export const routes = [
   {
     path: "/",
     component: DefaultLayout,
@@ -32,6 +30,7 @@ const routes = [
   {
     path: "/dashboard",
     component: DashboardLayout,
+    meta: { requiresAuth: true },
     children: [
       {
         name: "dashboard",
@@ -71,8 +70,3 @@ const routes = [
     ],
   },
 ];
-
-export const router = createRouter({
-  history: createWebHistory(),
-  routes,
-});

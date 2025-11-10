@@ -1,12 +1,11 @@
 import { createApp, markRaw } from "vue";
-import { createPinia } from "pinia";
-import moment from "moment";
-import { router } from "./router.js";
+import pinia from "@/stores";
+import { router } from "@/router";
 import App from "./App.vue";
+import moment from "moment";
 
 import "./style.css";
 
-const pinia = createPinia();
 const app = createApp(App);
 
 pinia.use(({ store }) => {
