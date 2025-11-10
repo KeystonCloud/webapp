@@ -92,5 +92,15 @@ export const useUserStore = defineStore("user", {
       delete defaults.headers.Authorization;
       this.$router.push({ name: "login" });
     },
+    async update(datas) {
+      try {
+        const result = await userApi.put("/me", datas);
+        this.user = result.data;
+        return result;
+      } catch (error) {
+        console.error("Update user failed:", error);
+        return error;
+      }
+    },
   },
 });

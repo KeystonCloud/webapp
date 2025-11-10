@@ -46,7 +46,10 @@
 
         <main class="mt-12 flex-1 lg:mt-0">
             <div class="max-w-3xl space-y-8">
-                <div class="overflow-hidden rounded-lg bg-gray-800 shadow">
+                <form
+                    @submit.prevent="updateProfil"
+                    class="overflow-hidden rounded-lg bg-gray-800 shadow"
+                >
                     <div class="px-4 py-5 sm:p-6">
                         <h3 class="text-lg font-medium leading-6 text-white">
                             Profil
@@ -55,7 +58,14 @@
                             Ces informations seront affichées publiquement.
                         </p>
 
-                        <form class="mt-6 space-y-6">
+                        <FormResultMessage
+                            :showSuccess="updateProfilSucceed"
+                            :showError="updateProfilError"
+                            successMessage="Votre profil est à jour."
+                            errorMessage="Une erreur est survenue lors de la mise à jour de votre profil."
+                        />
+
+                        <div class="mt-6 space-y-6">
                             <div>
                                 <KCInput
                                     label="Nom complet"
@@ -73,7 +83,7 @@
                                     v-model="email"
                                 />
                             </div>
-                        </form>
+                        </div>
                     </div>
                     <div class="bg-gray-800/50 px-4 py-3 text-right sm:px-6">
                         <button
@@ -83,9 +93,12 @@
                             Sauvegarder
                         </button>
                     </div>
-                </div>
+                </form>
 
-                <div class="overflow-hidden rounded-lg bg-gray-800 shadow">
+                <form
+                    @submit.prevent="updatePassword"
+                    class="overflow-hidden rounded-lg bg-gray-800 shadow"
+                >
                     <div class="px-4 py-5 sm:p-6">
                         <h3 class="text-lg font-medium leading-6 text-white">
                             Changer le mot de passe
@@ -94,6 +107,13 @@
                             Mettez à jour votre mot de passe pour sécuriser
                             votre compte.
                         </p>
+
+                        <FormResultMessage
+                            :showSuccess="updatePasswordSucceed"
+                            :showError="updatePasswordError"
+                            successMessage="Votre mot de passe est mis à jour."
+                            errorMessage="Une erreur est survenue lors de la mise à jour de votre mot de passe."
+                        />
 
                         <form class="mt-6 space-y-6">
                             <div>
@@ -121,7 +141,7 @@
                             Mettre à jour le mot de passe
                         </button>
                     </div>
-                </div>
+                </form>
 
                 <div
                     class="overflow-hidden rounded-lg bg-red-900/50 shadow ring-1 ring-red-400/30"
@@ -136,6 +156,7 @@
 
                         <div class="mt-6">
                             <button
+                                @click="openDeleteAccount"
                                 type="button"
                                 class="rounded-md bg-red-600 px-3.5 py-2 text-sm font-semibold text-white shadow-sm cursor-pointer hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
                             >
@@ -152,12 +173,64 @@
 <script setup>
 import { ref } from "vue";
 import { useUserStore } from "@/stores/userStore";
+import FormResultMessage from "@/components/form/FormResultMessage.vue";
 import KCInput from "@/components/form/KCInput.vue";
 
 const userStore = useUserStore();
 
+const updateProfilSucceed = ref(false);
+const updateProfilError = ref(false);
 const name = ref(userStore.user.name);
 const email = ref(userStore.user.email);
+
+const updatePasswordSucceed = ref(false);
+const updatePasswordError = ref(false);
 const password = ref("");
 const newPassword = ref("");
+
+async function updateProfil() {
+    const result = await userStore.update({
+        name: name.value,
+        email: email.value,
+    });
+
+    if (result.data) {
+        updateProfilError.value = false;
+        updateProfilSucceed.value = true;
+        setTimeout(() => {
+            updateProfilSucceed.value = false;
+        }, 3000);
+    } else {
+        updateProfilSucceed.value = false;
+        uodateProfilError.value = true;
+        setTimeout(() => {
+            uodateProfilError.value = false;
+        }, 3000);
+    }
+}
+
+async function updatePassword() {
+    const result = await userStore.update({
+        password: password.value,
+        new_password: newPassword.value,
+    });
+
+    if (result.data) {
+        updatePasswordError.value = false;
+        updatePasswordSucceed.value = true;
+        setTimeout(() => {
+            updatePasswordSucceed.value = false;
+        }, 3000);
+    } else {
+        updatePasswordSucceed.value = false;
+        uodatePasswordError.value = true;
+        setTimeout(() => {
+            uodatePasswordError.value = false;
+        }, 3000);
+    }
+}
+
+function openDeleteAccount() {
+    alert("Fonctionnalité non implémentée.");
+}
 </script>
