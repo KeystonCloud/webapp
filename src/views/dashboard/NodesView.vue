@@ -63,6 +63,8 @@
 </template>
 
 <script setup>
+import { ref, watch, inject } from "vue";
+import { useNodeStore } from "@/stores/nodeStore";
 import {
     ServerIcon,
     PlusIcon,
@@ -71,8 +73,10 @@ import {
     CircleStackIcon,
 } from "@heroicons/vue/20/solid";
 import StatCard from "@/components/dashboard/StatCard.vue";
-import AppCard from "@/components/dashboard/AppCard.vue";
 import NodeCard from "@/components/dashboard/NodeCard.vue";
+
+const nodeStore = useNodeStore();
+const moment = inject("moment");
 
 const stats = [
     { name: "Node Actifs", stat: "4", icon: ServerIcon },
@@ -83,26 +87,24 @@ const stats = [
     { name: "Total Gain", stat: "$ 6,934", icon: CurrencyDollarIcon },
 ];
 
-const nodes = [
-    {
-        uuid: "926b5ba8-6c6c-42ae-ad1c-af90a85b400c",
-        lastDeploy: "3 h",
-        lastDeployTime: "2025-11-04T16:10:00Z",
+const nodes = ref([]);
+
+watch(
+    () => nodeStore.nodes,
+    (newNodes) => {
+        nodes.value = [];
+
+        if (newNodes) {
+            newNodes.forEach((node) => {
+                nodes.value.push({
+                    uuid: node.id,
+                    name: node.name,
+                    lastDeploy: moment(node.created_at).fromNow(),
+                    lastDeployTime: node.created_at,
+                });
+            });
+        }
     },
-    {
-        uuid: "6e6a3efd-0f1c-4005-bd42-cba1b7963718",
-        lastDeploy: "1 j",
-        lastDeployTime: "2025-11-03T16:10:00Z",
-    },
-    {
-        uuid: "f7cf8937-18dc-4e62-a2c9-df1653ad17ec",
-        lastDeploy: "2 j",
-        lastDeployTime: "2025-11-02T16:10:00Z",
-    },
-    {
-        uuid: "ca88c12b-6c8e-4c5e-886b-243fdba590d6",
-        lastDeploy: "2 j",
-        lastDeployTime: "2025-11-02T16:00:00Z",
-    },
-];
+    { immediate: true },
+);
 </script>

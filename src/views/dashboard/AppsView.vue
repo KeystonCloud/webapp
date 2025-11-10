@@ -63,6 +63,8 @@
 </template>
 
 <script setup>
+import { ref, watch, inject } from "vue";
+import { useAppStore } from "@/stores/appStore";
 import {
     ArrowUpRightIcon,
     RectangleStackIcon,
@@ -73,6 +75,9 @@ import {
 import StatCard from "@/components/dashboard/StatCard.vue";
 import AppCard from "@/components/dashboard/AppCard.vue";
 
+const appStore = useAppStore();
+const moment = inject("moment");
+
 const stats = [
     { name: "Apps Total", stat: "6", icon: RectangleStackIcon },
     { name: "Bande Passante (Mois)", stat: "2.5 TB", icon: ArrowUpRightIcon },
@@ -80,48 +85,25 @@ const stats = [
     { name: "Facturation (Mois)", stat: "$ 49.90", icon: CurrencyDollarIcon },
 ];
 
-const apps = [
-    {
-        name: "KeystonCloud Status",
-        domain: "status.keyston.app",
-        status: "En_cours",
-        lastDeploy: "1 min",
-        lastDeployTime: "2025-11-04T16:10:00Z",
+const apps = ref([]);
+
+watch(
+    () => appStore.apps,
+    (newApps) => {
+        apps.value = [];
+
+        if (newApps) {
+            newApps.forEach((app) => {
+                apps.value.push({
+                    name: app.name,
+                    domain: "http://localhost:8000/app/" + app.name,
+                    status: "Deployed",
+                    lastDeploy: moment(app.created_at).fromNow(),
+                    lastDeployTime: app.created_at,
+                });
+            });
+        }
     },
-    {
-        name: "Portfolio-v3",
-        domain: "portfolio.keyston.app",
-        status: "Déployé",
-        lastDeploy: "2 h",
-        lastDeployTime: "2025-11-04T16:10:00Z",
-    },
-    {
-        name: "Client-Projet-Alpha",
-        domain: "alpha.client.com",
-        status: "Erreur",
-        lastDeploy: "1 j",
-        lastDeployTime: "2025-11-03T14:30:00Z",
-    },
-    {
-        name: "Lorem-Ipsum-App",
-        domain: "lorem.keyston.app",
-        status: "Déployé",
-        lastDeploy: "2 j",
-        lastDeployTime: "2025-11-02T14:30:00Z",
-    },
-    {
-        name: "Hello-World-App",
-        domain: "hello.keyston.app",
-        status: "Déployé",
-        lastDeploy: "3 j",
-        lastDeployTime: "2025-11-01T14:30:00Z",
-    },
-    {
-        name: "Example",
-        domain: "example.keyston.app",
-        status: "Déployé",
-        lastDeploy: "3 j",
-        lastDeployTime: "2025-11-01T14:00:00Z",
-    },
-];
+    { immediate: true },
+);
 </script>
