@@ -10,6 +10,7 @@ export const useUserStore = defineStore("user", {
       token: null,
       user: null,
       teams: null,
+      team: null,
     };
   },
   getters: {
@@ -73,6 +74,9 @@ export const useUserStore = defineStore("user", {
 
         // Get teams info
         this.teams = (await teamApi.get("/mine")).data;
+        if (this.teams && this.teams.length > 0) {
+          this.selectTeam(0);
+        }
 
         // Redirect to dashboard
         if (this.$router) {
@@ -100,6 +104,17 @@ export const useUserStore = defineStore("user", {
       } catch (error) {
         console.error("Update user failed:", error);
         return error;
+      }
+    },
+    selectTeam(index) {
+      if (this.teams && this.teams.length > index) {
+        this.team = this.teams[index];
+        this.team.label = this.team.name
+          .substring(0, this.team.name.length - "'s Team".length)
+          .split(" ")
+          .map((word) => word.charAt(0))
+          .join("")
+          .toUpperCase();
       }
     },
   },
