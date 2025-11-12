@@ -10,16 +10,6 @@
                     :item="item"
                     @click="item.onClick"
                 />
-                <!-- <span
-                        class="absolute top-1 left-[150%] bg-slate-800 rounded-md p-2 font-bold text-xs text-nowrap -translate-x-full opacity-0 group-hover:bg-slate-600 group-hover:text-slate-300 group-hover:opacity-100 group-hover:translate-x-0 ease-in transition-all"
-                        >{{ item.name }}</span
-                    >
-                    <component
-                        :is="item.icon"
-                        class="size-10 p-2"
-                        :title="item.name"
-                    />
-                </div> -->
             </nav>
             <div class="flex flex-col items-center space-y-4">
                 <Menu as="div" class="relative inline-block text-left">
@@ -37,7 +27,7 @@
                         leave-to-class="transform scale-95 opacity-0"
                     >
                         <MenuItems
-                            class="absolute left-full bottom-0 ml-5 -mb-2 w-56 bg-slate-800 rounded-md overflow-hidden focus:outline-none"
+                            class="absolute left-full bottom-2 ml-5 -mb-2 w-56 bg-slate-800 rounded-md overflow-hidden focus:outline-none"
                         >
                             <MenuItem
                                 v-for="(team, index) in userStore.teams"
@@ -77,7 +67,7 @@
                         leave-to-class="transform scale-95 opacity-0"
                     >
                         <MenuItems
-                            class="absolute left-full bottom-0 ml-5 -mb-2 w-56 bg-slate-800 rounded-md overflow-hidden focus:outline-none"
+                            class="absolute left-full bottom-2 ml-5 -mb-2 w-56 bg-slate-800 rounded-md overflow-hidden focus:outline-none"
                         >
                             <MenuItem
                                 v-for="item in userMenus"
