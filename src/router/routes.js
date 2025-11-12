@@ -11,6 +11,7 @@ import DashboardHomeView from "@/views/dashboard/HomeView.vue";
 import DashboardAppsView from "@/views/dashboard/AppsView.vue";
 import DashboardAppDetailView from "@/views/dashboard/AppDetailView.vue";
 import DashboardNodesView from "@/views/dashboard/NodesView.vue";
+import DashboardNodeDetailView from "@/views/dashboard/NodeDetailView.vue";
 import DashboardBillingView from "@/views/dashboard/BillingView.vue";
 import DashboardSettingsView from "@/views/dashboard/SettingsView.vue";
 import DashboardHelpView from "@/views/dashboard/HelpView.vue";
@@ -52,6 +53,11 @@ export const routes = [
         name: "dashboard.nodes",
         path: "/dashboard/nodes",
         component: DashboardNodesView,
+      },
+      {
+        name: "dashboard.node.detail",
+        path: "/dashboard/node/:uuid",
+        component: DashboardNodeDetailView,
       },
       {
         name: "dashboard.billing",

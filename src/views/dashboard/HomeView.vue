@@ -73,6 +73,8 @@
                             v-for="node in nodes"
                             :key="node.uuid"
                             :node="node"
+                            class="cursor-pointer"
+                            @click="openNodeDetail(node)"
                         />
                     </div>
                 </div>
@@ -165,6 +167,13 @@ function openAppDetail(app) {
     router.push({
         name: "dashboard.app.detail",
         params: { uuid: app.id },
+    });
+}
+
+function openNodeDetail(node) {
+    router.push({
+        name: "dashboard.node.detail",
+        params: { uuid: node.uuid },
     });
 }
 </script>

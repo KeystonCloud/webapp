@@ -54,6 +54,8 @@
                             v-for="node in nodes"
                             :key="node.uuid"
                             :node="node"
+                            class="cursor-pointer"
+                            @click="openNodeDetail(node)"
                         />
                     </div>
                 </div>
@@ -64,6 +66,7 @@
 
 <script setup>
 import { ref, watch, inject } from "vue";
+import { useRouter } from "vue-router";
 import { useNodeStore } from "@/stores/nodeStore";
 import {
     ServerIcon,
@@ -75,6 +78,7 @@ import {
 import StatCard from "@/components/dashboard/StatCard.vue";
 import NodeCard from "@/components/dashboard/NodeCard.vue";
 
+const router = useRouter();
 const nodeStore = useNodeStore();
 const moment = inject("moment");
 
@@ -107,4 +111,11 @@ watch(
     },
     { immediate: true },
 );
+
+function openNodeDetail(node) {
+    router.push({
+        name: "dashboard.node.detail",
+        params: { uuid: node.uuid },
+    });
+}
 </script>
