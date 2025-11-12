@@ -12,6 +12,7 @@
     "@headlessui/vue": "^1.7.23",
     "@heroicons/vue": "^2.2.0",
     "@tailwindcss/vite": "^4.1.16",
+    "dotenv": "^17.2.3",
     "mande": "^2.0.9",
     "moment": "^2.30.1",
     "pinia": "^3.0.3",

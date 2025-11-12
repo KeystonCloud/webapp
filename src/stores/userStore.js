@@ -84,6 +84,7 @@ export const useUserStore = defineStore("user", {
         }
       } catch (error) {
         console.error("Login failed:", error);
+        this.$router.push({ name: "login" });
       }
     },
     async logout() {

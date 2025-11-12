@@ -54,6 +54,8 @@
                             v-for="app in apps"
                             :key="app.name"
                             :app="app"
+                            class="cursor-pointer"
+                            @click="openAppDetail(app)"
                         />
                     </div>
                 </div>
@@ -81,6 +83,7 @@
 
 <script setup>
 import { ref, watch, inject } from "vue";
+import { useRouter } from "vue-router";
 import { useNodeStore } from "@/stores/nodeStore";
 import { useAppStore } from "@/stores/appStore";
 import {
@@ -97,6 +100,7 @@ import StatCard from "@/components/dashboard/StatCard.vue";
 import AppCard from "@/components/dashboard/AppCard.vue";
 import NodeCard from "@/components/dashboard/NodeCard.vue";
 
+const router = useRouter();
 const nodeStore = useNodeStore();
 const appStore = useAppStore();
 const moment = inject("moment");
@@ -125,6 +129,7 @@ watch(
         if (newApps) {
             newApps.forEach((app) => {
                 apps.value.push({
+                    id: app.id,
                     name: app.name,
                     domain: "http://localhost:8000/app/" + app.name,
                     status: "Deployed",
@@ -155,4 +160,11 @@ watch(
     },
     { immediate: true },
 );
+
+function openAppDetail(app) {
+    router.push({
+        name: "dashboard.app.detail",
+        params: { uuid: app.id },
+    });
+}
 </script>
