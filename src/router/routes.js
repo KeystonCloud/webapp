@@ -8,6 +8,8 @@ import LoginView from "@/views/LoginView.vue";
 import SignupView from "@/views/SignupView.vue";
 
 import DashboardHomeView from "@/views/dashboard/HomeView.vue";
+import DashboardAppNewView from "@/views/dashboard/AppNewView.vue";
+import DashboardAppConfigView from "@/views/dashboard/AppConfigView.vue";
 import DashboardAppsView from "@/views/dashboard/AppsView.vue";
 import DashboardAppDetailView from "@/views/dashboard/AppDetailView.vue";
 import DashboardNodesView from "@/views/dashboard/NodesView.vue";
@@ -43,6 +45,16 @@ export const routes = [
         name: "dashboard.apps",
         path: "/dashboard/apps",
         component: DashboardAppsView,
+      },
+      {
+        name: "dashboard.app.new",
+        path: "/dashboard/app/new",
+        component: DashboardAppNewView,
+      },
+      {
+        name: "dashboard.app.config",
+        path: "/dashboard/app/config",
+        component: DashboardAppConfigView,
       },
       {
         name: "dashboard.app.detail",

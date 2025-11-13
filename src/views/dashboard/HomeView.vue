@@ -15,6 +15,7 @@
                     <button
                         type="button"
                         class="block rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm cursor-pointer hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
+                        @click="openView('dashboard.app.new')"
                     >
                         <PlusIcon
                             class="-ml-1.5 mr-1.5 h-5 w-5 inline-block align-text-bottom"
@@ -55,7 +56,11 @@
                             :key="app.name"
                             :app="app"
                             class="cursor-pointer"
-                            @click="openAppDetail(app)"
+                            @click="
+                                openView('dashboard.app.detail', {
+                                    uuid: app.id,
+                                })
+                            "
                         />
                     </div>
                 </div>
@@ -74,7 +79,11 @@
                             :key="node.uuid"
                             :node="node"
                             class="cursor-pointer"
-                            @click="openNodeDetail(node)"
+                            @click="
+                                openView('dashboard.node.detail', {
+                                    uuid: node.uuid,
+                                })
+                            "
                         />
                     </div>
                 </div>
@@ -163,17 +172,11 @@ watch(
     { immediate: true },
 );
 
-function openAppDetail(app) {
-    router.push({
-        name: "dashboard.app.detail",
-        params: { uuid: app.id },
-    });
-}
-
-function openNodeDetail(node) {
-    router.push({
-        name: "dashboard.node.detail",
-        params: { uuid: node.uuid },
-    });
+function openView(name, params) {
+    if (params) {
+        router.push({ name: name, params: params });
+    } else {
+        router.push({ name: name });
+    }
 }
 </script>

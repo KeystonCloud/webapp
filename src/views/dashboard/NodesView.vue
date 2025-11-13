@@ -10,19 +10,6 @@
                         Vue d'ensemble de vos nodes.
                     </p>
                 </div>
-
-                <div>
-                    <button
-                        type="button"
-                        class="block rounded-md bg-indigo-500 px-3 py-2 text-sm font-semibold text-white shadow-sm cursor-pointer hover:bg-indigo-400 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500"
-                    >
-                        <PlusIcon
-                            class="-ml-1.5 mr-1.5 h-5 w-5 inline-block align-text-bottom"
-                            aria-hidden="true"
-                        />
-                        Nouveau Node
-                    </button>
-                </div>
             </div>
         </header>
 
