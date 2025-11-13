@@ -30,14 +30,6 @@
             </div>
         </div>
         <div class="flex flex-none items-center gap-x-4">
-            <a
-                v-if="app.domain"
-                :href="app.domain"
-                target="_blank"
-                class="hidden rounded-md bg-white/10 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm cursor-pointer hover:bg-white/20 sm:block"
-            >
-                Visiter
-            </a>
             <ChevronRightIcon
                 class="h-5 w-5 flex-none text-gray-500"
                 aria-hidden="true"

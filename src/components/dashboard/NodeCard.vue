@@ -5,6 +5,14 @@
                 <p class="text-sm font-semibold leading-6 text-white">
                     {{ node.name }}
                 </p>
+                <span
+                    :class="[
+                        statuses[node.status],
+                        'rounded-md whitespace-nowrap mt-0.5 px-1.5 py-0.5 text-xs font-medium ring-1 ring-inset',
+                    ]"
+                >
+                    {{ node.status }}
+                </span>
             </div>
             <div
                 class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-400"
@@ -18,12 +26,6 @@
             </div>
         </div>
         <div class="flex flex-none items-center gap-x-4">
-            <button
-                type="button"
-                class="hidden rounded-md bg-white/10 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm cursor-pointer hover:bg-white/20 sm:block"
-            >
-                Détails
-            </button>
             <ChevronRightIcon
                 class="h-5 w-5 flex-none text-gray-500"
                 aria-hidden="true"
@@ -41,4 +43,9 @@ defineProps({
         required: true,
     },
 });
+
+const statuses = {
+    Online: "text-green-400 bg-green-400/10 ring-green-400/20",
+    Offline: "text-red-400 bg-red-400/10 ring-red-400/20",
+};
 </script>

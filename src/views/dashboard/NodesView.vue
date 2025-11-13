@@ -90,6 +90,7 @@ watch(
                 nodes.value.push({
                     uuid: node.id,
                     name: node.name,
+                    status: "Online",
                     lastDeploy: moment(node.created_at).fromNow(),
                     lastDeployTime: node.created_at,
                 });
