@@ -70,10 +70,10 @@ export const useUserStore = defineStore("user", {
         defaults.headers.Authorization = authorization;
 
         // Get user info
-        this.user = (await userApi.get("/me")).data;
+        await this.loadUserData();
 
         // Get teams info
-        this.teams = (await teamApi.get("/mine")).data;
+        await this.loadTeamsData();
         if (this.teams && this.teams.length > 0) {
           this.selectTeam(0);
         }
@@ -85,6 +85,30 @@ export const useUserStore = defineStore("user", {
       } catch (error) {
         console.error("Login failed:", error);
         this.$router.push({ name: "login" });
+      }
+    },
+    async loadUserData() {
+      try {
+        this.user = (await userApi.get("/me")).data;
+        console.log("Me:", this.user);
+      } catch (error) {
+        console.error("Load user datas:", error);
+      }
+    },
+    async loadTeamsData() {
+      try {
+        this.teams = (await teamApi.get("/mine")).data;
+        console.log("Teams:", this.teams);
+      } catch (error) {
+        console.error("Load teams data:", error);
+      }
+    },
+    async loadCurrentDetailledTeamData() {
+      try {
+        this.team = (await teamApi.get("/" + this.team.id)).data;
+        console.log("Team:", this.team);
+      } catch (error) {
+        console.error("Load teams data:", error);
       }
     },
     async logout() {
@@ -116,6 +140,16 @@ export const useUserStore = defineStore("user", {
           .map((word) => word.charAt(0))
           .join("")
           .toUpperCase();
+      }
+    },
+    async updateTeam(datas) {
+      try {
+        const result = await teamApi.put(`/${this.team.id}`, datas);
+        this.team = result.data;
+        return result;
+      } catch (error) {
+        console.error("Update team failed:", error);
+        throw error;
       }
     },
   },

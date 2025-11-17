@@ -19,32 +19,38 @@
                     <h3
                         class="text-xs font-semibold uppercase tracking-wide text-gray-400"
                     >
-                        Compte
+                        Équipe
                     </h3>
                     <ul role="list" class="mt-2 space-y-1">
                         <li>
-                            <a
-                                href="#"
-                                class="group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white"
+                            <div
+                                @click="
+                                    openView('dashboard.settings.team.config')
+                                "
+                                class="cursor-pointer group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white"
                             >
-                                <span class="truncate">Équipes</span>
-                            </a>
+                                <span class="truncate">Configuration</span>
+                            </div>
                         </li>
                         <li>
-                            <a
-                                href="#"
-                                class="group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white"
+                            <div
+                                @click="
+                                    openView('dashboard.settings.team.members')
+                                "
+                                class="cursor-pointer group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white"
                             >
                                 <span class="truncate">Membres</span>
-                            </a>
+                            </div>
                         </li>
                         <li>
-                            <a
-                                href="#"
-                                class="group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white"
+                            <div
+                                @click="
+                                    openView('dashboard.settings.team.billing')
+                                "
+                                class="cursor-pointer group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white"
                             >
                                 <span class="truncate">Facturation</span>
-                            </a>
+                            </div>
                         </li>
                     </ul>
                 </li>
@@ -53,36 +59,18 @@
                     <h3
                         class="text-xs font-semibold uppercase tracking-wide text-gray-400"
                     >
-                        Application
+                        Applications
                     </h3>
                     <ul role="list" class="mt-2 space-y-1">
                         <li>
-                            <a
-                                href="#"
-                                class="group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white"
+                            <div
+                                @click="openView('dashboard.settings.apps.env')"
+                                class="cursor-pointer group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white"
                             >
                                 <span class="truncate"
                                     >Variables d'environnement</span
                                 >
-                            </a>
-                        </li>
-                    </ul>
-                </li>
-
-                <li>
-                    <h3
-                        class="text-xs font-semibold uppercase tracking-wide text-gray-400"
-                    >
-                        Node
-                    </h3>
-                    <ul role="list" class="mt-2 space-y-1">
-                        <li>
-                            <a
-                                href="#"
-                                class="group flex items-center gap-x-3 rounded-md px-3 py-2 text-sm font-medium text-gray-300 hover:bg-gray-800 hover:text-white"
-                            >
-                                <span class="truncate">Auto-Config</span>
-                            </a>
+                            </div>
                         </li>
                     </ul>
                 </li>
@@ -90,19 +78,17 @@
         </nav>
 
         <main class="mt-12 flex-1 lg:mt-0">
-            <div class="max-w-3xl space-y-8">
-                <div class="overflow-hidden rounded-lg bg-gray-800 shadow">
-                    <div class="px-4 py-5 sm:p-6">
-                        <h3 class="text-lg font-medium leading-6 text-white">
-                            TODO
-                        </h3>
-                    </div>
-                </div>
-            </div>
+            <RouterView />
         </main>
     </div>
 </template>
 
 <script setup>
-import KCInput from "@/components/form/KCInput.vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+function openView(name) {
+    router.push({ name });
+}
 </script>

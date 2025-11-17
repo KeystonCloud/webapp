@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="show"
-        class="mt-4 overflow-hidden rounded-lg bg-red-900/50 shadow ring-1 ring-red-400/30"
+        class="mt-4 overflow-hidden rounded-lg bg-red-500/50 shadow ring-1 ring-red-500/10"
     >
         <div class="p-4">
             <p class="text-sm text-red-200">{{ message }}</p>

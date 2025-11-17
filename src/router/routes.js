@@ -16,6 +16,10 @@ import DashboardNodesView from "@/views/dashboard/NodesView.vue";
 import DashboardNodeDetailView from "@/views/dashboard/NodeDetailView.vue";
 import DashboardBillingView from "@/views/dashboard/BillingView.vue";
 import DashboardSettingsView from "@/views/dashboard/SettingsView.vue";
+import DashboardSettingsTeamConfigView from "@/views/dashboard/settings/TeamConfigView.vue";
+import DashboardSettingsTeamMembersView from "@/views/dashboard/settings/TeamMembersView.vue";
+import DashboardSettingsTeamBillingView from "@/views/dashboard/settings/TeamBillingView.vue";
+import DashboardSettingsAppEnvView from "@/views/dashboard/settings/AppEnvView.vue";
 import DashboardHelpView from "@/views/dashboard/HelpView.vue";
 import DashboardProfilView from "@/views/dashboard/ProfilView.vue";
 
@@ -80,6 +84,33 @@ export const routes = [
         name: "dashboard.settings",
         path: "/dashboard/settings",
         component: DashboardSettingsView,
+        redirect: { name: "dashboard.settings.team.config" },
+        children: [
+          {
+            name: "dashboard.settings.team.config",
+            path: "team",
+            meta: { load: "currentTeam" },
+            component: DashboardSettingsTeamConfigView,
+          },
+          {
+            name: "dashboard.settings.team.members",
+            path: "team/members",
+            meta: { load: "currentTeam" },
+            component: DashboardSettingsTeamMembersView,
+          },
+          {
+            name: "dashboard.settings.team.billing",
+            path: "team/billing",
+            meta: { load: "currentTeam" },
+            component: DashboardSettingsTeamBillingView,
+          },
+          {
+            name: "dashboard.settings.apps.env",
+            path: "apps/env",
+            meta: { load: "currentTeam" },
+            component: DashboardSettingsAppEnvView,
+          },
+        ],
       },
       {
         name: "dashboard.help",
@@ -89,6 +120,7 @@ export const routes = [
       {
         name: "dashboard.profil",
         path: "/dashboard/profil",
+        meta: { load: "user" },
         component: DashboardProfilView,
       },
     ],
