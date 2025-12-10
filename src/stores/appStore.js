@@ -1,7 +1,5 @@
 import { defineStore } from "pinia";
-import { mande } from "mande";
-
-const appApi = mande("/api/app");
+import { graphQLRequest, gql } from "@/api/graphql.js";
 
 export const useAppStore = defineStore("app", {
   state: () => {
@@ -12,8 +10,34 @@ export const useAppStore = defineStore("app", {
   actions: {
     async load() {
       try {
+        const teamId = localStorage.getItem("team");
+
         // Get app list
-        this.apps = (await appApi.get("/mine")).data;
+        const datas = await graphQLRequest(gql`
+          {
+            team(id: "${teamId}") {
+              apps {
+                id
+                name
+                keyName
+                ipnsName
+                createdAt
+                updatedAt
+                team {
+                  id
+                }
+                deployments {
+                  id
+                  cid
+                  status
+                  createdAt
+                }
+              }
+            }
+          }
+        `);
+
+        this.apps = datas.team.apps;
       } catch (error) {
         console.error("App list failed:", error);
       }

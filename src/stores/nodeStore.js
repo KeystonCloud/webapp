@@ -1,21 +1,37 @@
 import { defineStore } from "pinia";
-import { mande } from "mande";
-
-const nodeApi = mande("/api/node");
+import { graphQLRequest, gql } from "@/api/graphql.js";
 
 export const useNodeStore = defineStore("node", {
   state: () => {
     return {
-      modes: null,
+      nodes: null,
     };
   },
   actions: {
     async load() {
+      this.loadNodesForTeamData();
+    },
+    async loadNodesForTeamData() {
       try {
-        // Get nodes list
-        this.nodes = (await nodeApi.get("/mine")).data;
+        const teamId = localStorage.getItem("team");
+        const datas = await graphQLRequest(gql`
+          {
+            team(id: "${teamId}") {
+              nodes {
+                id,
+                name,
+                ip,
+                port,
+                createdAt,
+                updatedAt,
+              },
+            }
+          }
+        `);
+
+        this.nodes = datas.team.nodes;
       } catch (error) {
-        console.error("Node list failed:", error);
+        console.error("[NodeStore] Load nodes for team datas:", error);
       }
     },
   },

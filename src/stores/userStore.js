@@ -1,8 +1,6 @@
 import { defineStore } from "pinia";
-import { mande, defaults } from "mande";
-
-const userApi = mande("/api/user");
-const teamApi = mande("/api/team");
+import { graphQLRequest, gql } from "@/api/graphql.js";
+import { getRestApi } from "@/api/rest.js";
 
 export const useUserStore = defineStore("user", {
   state: () => {
@@ -38,7 +36,7 @@ export const useUserStore = defineStore("user", {
     async register(name, email, password) {
       try {
         // Register user
-        await userApi.post({
+        await getRestApi("user").post({
           name,
           email,
           password,
@@ -55,27 +53,30 @@ export const useUserStore = defineStore("user", {
         if (!this.token) {
           // Get user logged token
           this.token = (
-            await userApi.post("/login", {
+            await getRestApi("user").post("/login", {
               email,
               password,
             })
           ).data;
+
           localStorage.setItem("token", this.token);
         }
-
-        // Prepare authorization header for future requests
-        const authorization = "Bearer " + this.token;
-        userApi.options.headers.Authorization = authorization;
-        teamApi.options.headers.Authorization = authorization;
-        defaults.headers.Authorization = authorization;
 
         // Get user info
         await this.loadUserData();
 
-        // Get teams info
+        // Get all user teams
         await this.loadTeamsData();
-        if (this.teams && this.teams.length > 0) {
+
+        if (localStorage.getItem("team")) {
+          this.teams.forEach((team, index) => {
+            if (team.id === localStorage.getItem("team")) {
+              this.selectTeam(index);
+            }
+          });
+        } else {
           this.selectTeam(0);
+          localStorage.setItem("team", this.team.id);
         }
 
         // Redirect to dashboard
@@ -89,26 +90,64 @@ export const useUserStore = defineStore("user", {
     },
     async loadUserData() {
       try {
-        this.user = (await userApi.get("/me")).data;
-        console.log("Me:", this.user);
+        const datas = await graphQLRequest(gql`
+          {
+            me {
+              id,
+              name,
+              email,
+              role,
+              createdAt,
+              updatedAt
+            }
+          }
+        `);
+
+        this.user = datas.me;
       } catch (error) {
         console.error("Load user datas:", error);
       }
     },
     async loadTeamsData() {
       try {
-        this.teams = (await teamApi.get("/mine")).data;
-        console.log("Teams:", this.teams);
+        const datas = await graphQLRequest(gql`
+          {
+            me {
+              teams {
+                id,
+                name,
+                users {
+                  id,
+                  name,
+                  email
+                },
+              }
+            }
+          }
+        `);
+        this.teams = datas.me.teams;
       } catch (error) {
         console.error("Load teams data:", error);
       }
     },
     async loadCurrentDetailledTeamData() {
       try {
-        this.team = (await teamApi.get("/" + this.team.id)).data;
-        console.log("Team:", this.team);
+        const datas = await graphQLRequest(gql`
+          {
+            team(id: "${this.team.id}") {
+              id,
+              name,
+              users {
+                id,
+                name,
+                email
+              },
+            }
+          }
+        `);
+        this.team = datas.team;
       } catch (error) {
-        console.error("Load teams data:", error);
+        console.error("Load current team data:", error);
       }
     },
     async logout() {
@@ -116,14 +155,11 @@ export const useUserStore = defineStore("user", {
       this.token = null;
       this.user = null;
       this.teams = null;
-      delete userApi.options.headers.Authorization;
-      delete teamApi.options.headers.Authorization;
-      delete defaults.headers.Authorization;
       this.$router.push({ name: "login" });
     },
     async update(datas) {
       try {
-        const result = await userApi.put("/me", datas);
+        const result = await getRestApi("user").put("/me", datas);
         this.user = result.data;
         return result;
       } catch (error) {
@@ -144,7 +180,7 @@ export const useUserStore = defineStore("user", {
     },
     async updateTeam(datas) {
       try {
-        const result = await teamApi.put(`/${this.team.id}`, datas);
+        const result = await getRestApi("team").put(`/${this.team.id}`, datas);
         this.team = result.data;
         return result;
       } catch (error) {

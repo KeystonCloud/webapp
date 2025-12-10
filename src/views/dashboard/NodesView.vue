@@ -14,39 +14,44 @@
         </header>
 
         <main class="p-4 sm:p-6 lg:p-8">
-            <div>
-                <h2 class="text-base font-semibold leading-7 text-white">
-                    Aperçu des Statistiques
-                </h2>
-                <div
-                    class="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
-                >
-                    <StatCard
-                        v-for="item in stats"
-                        :key="item.name"
-                        :item="item"
-                    />
-                </div>
+            <div v-if="!nodes || nodes.length === 0">
+                <p class="text-white">Aucun node attaché à votre équipe.</p>
             </div>
-
-            <div class="mt-10">
-                <h2 class="text-base font-semibold leading-7 text-white">
-                    Liste des Nodes
-                </h2>
-                <div
-                    class="mt-4 overflow-hidden rounded-lg bg-gray-800/80 shadow-md ring-1 ring-white/10"
-                >
-                    <div role="list" class="divide-y divide-white/10">
-                        <NodeCard
-                            v-for="node in nodes"
-                            :key="node.uuid"
-                            :node="node"
-                            class="cursor-pointer"
-                            @click="openNodeDetail(node)"
+            <template v-else>
+                <div>
+                    <h2 class="text-base font-semibold leading-7 text-white">
+                        Aperçu des Statistiques
+                    </h2>
+                    <div
+                        class="mt-4 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4"
+                    >
+                        <StatCard
+                            v-for="item in stats"
+                            :key="item.name"
+                            :item="item"
                         />
                     </div>
                 </div>
-            </div>
+    
+                <div class="mt-10">
+                    <h2 class="text-base font-semibold leading-7 text-white">
+                        Liste des Nodes
+                    </h2>
+                    <div
+                        class="mt-4 overflow-hidden rounded-lg bg-gray-800/80 shadow-md ring-1 ring-white/10"
+                    >
+                        <div role="list" class="divide-y divide-white/10">
+                            <NodeCard
+                                v-for="node in nodes"
+                                :key="node.uuid"
+                                :node="node"
+                                class="cursor-pointer"
+                                @click="openNodeDetail(node)"
+                            />
+                        </div>
+                    </div>
+                </div>
+            </template>
         </main>
     </div>
 </template>

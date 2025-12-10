@@ -30,12 +30,12 @@
                         </thead>
                         <tbody>
                             <tr
-                                v-for="item in Array(5)"
+                                v-for="user in userStore.team.users"
                                 class="border-b border-slate-600 text-sm group"
                             >
-                                <td class="p-2">Gregory House</td>
-                                <td class="p-2">ghouse@ppth.com</td>
-                                <td class="p-2">member</td>
+                                <td class="p-2">{{ user.name }}</td>
+                                <td class="p-2">{{ user.email }}</td>
+                                <td class="p-2">N/C</td>
                                 <td class="p-2 w-12">
                                     <MinusCircleIcon
                                         class="size-5 cursor-pointer hidden group-hover:block"

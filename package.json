@@ -13,6 +13,8 @@
     "@heroicons/vue": "^2.2.0",
     "@tailwindcss/vite": "^4.1.16",
     "dotenv": "^17.2.3",
+    "graphql": "^16.12.0",
+    "graphql-request": "^7.3.4",
     "mande": "^2.0.9",
     "moment": "^2.30.1",
     "pinia": "^3.0.3",
